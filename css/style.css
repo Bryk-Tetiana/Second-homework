@@ -1,0 +1,254 @@
+:root {
+  --background: #f5f1ea;
+  --text: #2f2f2f;
+  --accent: #72543f;
+  --note-width: 220px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: var(--text);
+  background: var(--background);
+}
+
+button {
+  font: inherit;
+}
+
+.app {
+  width: min(1200px, 94%);
+  margin: 32px auto;
+}
+
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.app__header p,
+.hint {
+  color: #6d6d6d;
+}
+
+.hint {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 16px 0;
+}
+
+.add-button {
+  flex-shrink: 0;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.add-button:hover {
+  transform: translateY(-2px);
+}
+
+.board {
+  position: relative;
+  height: 650px;
+  overflow: hidden;
+  border: 2px dashed #b8aa9d;
+  border-radius: 16px;
+  background-color: white;
+  background-image:
+    linear-gradient(#eee 1px, transparent 1px),
+    linear-gradient(90deg, #eee 1px, transparent 1px);
+  background-size: 30px 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.note {
+  position: absolute;
+  width: var(--note-width);
+  height: 170px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--note-color, #fff1a8);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+  animation: appear 0.2s ease;
+  transition: box-shadow 0.2s, transform 0.2s, opacity 0.2s;
+}
+
+.note--selected {
+  outline: 3px solid #72543f;
+  outline-offset: 2px;
+}
+
+.note--dragging {
+  transform: scale(1.03) rotate(1deg);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.25);
+  user-select: none;
+}
+
+.note__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  height: 40px;
+  padding: 5px 8px;
+  background: var(--header-color, #f6dc75);
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+
+.note:focus-visible {
+  outline: 3px solid #72543f;
+  outline-offset: 3px;
+}
+
+.note {
+  max-width: 100%;
+}
+
+.note--dragging .note__header {
+  cursor: grabbing;
+}
+
+.note:hover:not(.note--dragging):not(.note--removing) {
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.22);
+}
+
+.note__color,
+.note__delete {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.note__color:hover,
+.note__delete:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.note__delete {
+  font-size: 22px;
+}
+
+.note__content {
+  height: 130px;
+  padding: 16px;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+  cursor: text;
+  white-space: pre-wrap;
+}
+
+.note__content[contenteditable="true"] {
+  background: rgba(255, 255, 255, 0.25);
+  outline: 2px solid rgba(114, 84, 63, 0.4);
+  outline-offset: -4px;
+}
+
+.note[data-color="yellow"] {
+  --note-color: #fff1a8;
+  --header-color: #f6dc75;
+}
+
+.note[data-color="pink"] {
+  --note-color: #ffd9e6;
+  --header-color: #f5b9cf;
+}
+
+.note[data-color="blue"] {
+  --note-color: #d9edff;
+  --header-color: #b8dafa;
+}
+
+.note[data-color="green"] {
+  --note-color: #ddf4d3;
+  --header-color: #bfe3af;
+}
+
+.note[data-color="purple"] {
+  --note-color: #eadcff;
+  --header-color: #d1baf2;
+}
+
+.note--removing {
+  opacity: 0;
+  transform: scale(0.85);
+  pointer-events: none;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+button:focus-visible,
+.note__content:focus-visible {
+  outline: 3px solid #222;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --note-width: 190px;
+  }
+
+  .app__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .board {
+    height: 600px;
+  }
+
+  .add-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 240px) {
+  :root {
+    --note-width: 140px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

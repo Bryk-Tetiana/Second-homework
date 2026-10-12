@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Інтерактивна дошка стікерів">
+  <title>Дошка стікерів</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="app__header">
+      <div>
+        <h1>Дошка стікерів</h1>
+        <p>Створюй, редагуй та переміщуй свої нотатки</p>
+      </div>
+
+      <button id="add-note" class="add-button" type="button">
+        + Додати стікер
+      </button>
+    </header>
+
+    <p class="hint">
+      Подвійний клік по дошці — новий стікер.
+      Клік по тексту — редагування.
+      Ctrl + Enter — зберегти, Escape — скасувати.
+      Вибери стікер і натисни Delete, щоб видалити.
+    </p>
+
+    <section
+      id="board"
+      class="board"
+      aria-label="Дошка стікерів"
+    ></section>
+  </main>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
